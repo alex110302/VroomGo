@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Road : MonoBehaviour 
 {
+    //GameObjects
+    [field: SerializeField] public GameObject RoadObj { get; private set; }
+    [field: SerializeField] public GameObject NewRoadSegSpawnPoint { get; private set; }
+
     //Perfabs
     [field: SerializeField] public GameObject carPrefab {  get; private set; }
     public CarController Car { get; private set; }
@@ -10,14 +14,31 @@ public class Road : MonoBehaviour
     //Scripts
     public Pathfinding Pathfinding { get; private set; }
 
+    [SerializeField] private bool isStarterRoad = false;
+
     private void Awake()
     {
-        Pathfinding = new Pathfinding(8, 1, 2.5f, transform.position, 0, true);
+        Vector2 gridPostion = new Vector2(transform.position.x, transform.position.y + 10); 
+
+        if (!isStarterRoad) Pathfinding = new Pathfinding(8, 1, 2.5f, gridPostion, RoadObj, true, 0, true);
     }
 
     private void Start()
     {
-        GenerateCars();
+        if (!isStarterRoad) GenerateCars();
+    }
+
+    private void Update()
+    {
+        DespawnRoad();
+    }
+
+    private void DespawnRoad()
+    {
+        if (transform.position.y < -50)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void FixedUpdate()

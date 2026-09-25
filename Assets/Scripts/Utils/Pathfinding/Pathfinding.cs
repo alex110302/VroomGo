@@ -26,7 +26,7 @@ public class Pathfinding
                 Grid.GetObject(x, y).InitalizeNeighbourNodes();
     }
 
-    public Pathfinding(int width, int height, float cellSize, Vector3 location, uint id = 0, bool debug = false)
+    public Pathfinding(int width, int height, float cellSize, Vector3 location, GameObject gameObject, bool isGridMoving, uint id = 0, bool debug = false)
     {
         this.Id = id;
 
@@ -37,6 +37,8 @@ public class Pathfinding
             cellSize, 
             location, 
             (Grid<PathNode> grid, int x, int y) => new PathNode(grid, x, y),
+            gameObject,
+            isGridMoving,
             debug
        );
 

@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.LightTransport;
 
 public class RoadSpawner : MonoBehaviour 
 {
@@ -12,7 +14,14 @@ public class RoadSpawner : MonoBehaviour
     }
     private void Update()
     {
-        
-           
+        SpawnNewRoad();
+    }
+
+    private void SpawnNewRoad()
+    {
+        if (Road.transform.position.y < -10) 
+            Road = Instantiate(RoadPrefab, 
+            Road.NewRoadSegSpawnPoint.transform.position, 
+            Quaternion.identity).GetComponent<Road>();
     }
 }

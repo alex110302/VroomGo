@@ -1,8 +1,11 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Grid<T>
 {
+    public GameObject GameObject { get; }
+
     public event EventHandler<OnGridValueChangedEventArgs> OnGridValueChanged;
     public class OnGridValueChangedEventArgs : EventArgs
     {
@@ -16,15 +19,18 @@ public class Grid<T>
     private T[,] gridArray;
     private Vector3 originPosition;
     private TextMesh[,] debugArray;
-
+    private bool isGridPostionMoving;
+    
     public bool DebugInfo { get; set; }
 
-    public Grid(int width, int hight, float cellSize, Vector3 originPosition, Func<Grid<T>, int, int, T> OnCreateGridObj, bool debugInfo = false)
+    public Grid(int width, int hight, float cellSize, Vector3 originPosition, Func<Grid<T>, int, int, T> OnCreateGridObj, GameObject gameObject, bool isGridMoving = false, bool debugInfo = false)
     {
         this.Width = width;
         this.Height = hight;
         this.CellSize = cellSize;
         this.originPosition = originPosition;
+        this.isGridPostionMoving = isGridMoving;
+        GameObject = gameObject;
         DebugInfo = debugInfo;
 
         gridArray = new T[width, hight];
@@ -56,7 +62,7 @@ public class Grid<T>
 
     public Vector3 GetWorldPosition(int x, int y)
     {
-        return new Vector3(x, y) * CellSize + originPosition;
+        return new Vector3(x, y) * CellSize + (isGridPostionMoving ? GameObject.transform.position : originPosition);
     }
 
     /// <summary>
@@ -67,8 +73,8 @@ public class Grid<T>
     /// <param name="y"></param>
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
-        x = Mathf.FloorToInt((worldPosition - originPosition).x / CellSize);
-        y = Mathf.FloorToInt((worldPosition - originPosition).y / CellSize);
+        x = Mathf.FloorToInt((worldPosition - (isGridPostionMoving ? GameObject.transform.position : originPosition)).x / CellSize);
+        y = Mathf.FloorToInt((worldPosition - (isGridPostionMoving ? GameObject.transform.position : originPosition)).y / CellSize);
     }
 
     public Vector3 GetCenterOfCellPosition(int x, int y)
