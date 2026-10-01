@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CarController : Controller<CarController>
+public class CarController : Controller<CarController>, IObstacles
 {
     [field: SerializeField] public Rigidbody2D RB {  get; private set; }
     [field: SerializeField] public float Speed { get; set; }
@@ -35,5 +35,26 @@ public class CarController : Controller<CarController>
     private void OnDestroy()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        CauseAffect(collision.GetComponent<PlayerController>());
+    }
+
+    public void CauseAffect(IAffectable affects)
+    {
+        Effects effects = new Effects
+        {
+            Damage = 1,
+            CallBack = (test) =>
+            {
+                return test;
+            }
+        };
+
+        
+
+        affects.InterpreteAffects(effects);
     }
 }

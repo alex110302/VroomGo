@@ -32,6 +32,10 @@ public class Road : MonoBehaviour
     {
         DespawnRoad();
     }
+    public void FixedUpdate()
+    {
+        transform.position += (Vector3.up * Time.fixedDeltaTime) * -10; 
+    }
 
     private void DespawnRoad()
     {
@@ -39,11 +43,6 @@ public class Road : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    public void FixedUpdate()
-    {
-        transform.position += (Vector3.up * Time.fixedDeltaTime) * -10; 
     }
 
     public void GenerateCars(uint minCars = 0, uint maxCars = 6)

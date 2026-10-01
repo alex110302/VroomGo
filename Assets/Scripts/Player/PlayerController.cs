@@ -1,7 +1,8 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : Controller<PlayerController>
+public class PlayerController : Controller<PlayerController>, IAffectable
 {
     //Player Object
     [field: SerializeField] public GameObject playerObj { get; private set; }
@@ -13,10 +14,11 @@ public class PlayerController : Controller<PlayerController>
     [field: SerializeField] public Rigidbody2D RB { get; private set; }
     [field: SerializeField] public BoxCollider2D BoxCollider { get; private set; }
     [field: SerializeField] public LayerMask BoundMask { get; private set; }
-    
-    //Primatives
-    [field: SerializeField] public float Speed { get; set; }
+
+    //Attributes
     [field: SerializeField] public int Health { get; set; }
+    [field: SerializeField] public float Speed { get; set; }
+
 
     //Input
     [field: SerializeField] public PlayerControlsInput PCI { get; private set; }
@@ -24,6 +26,7 @@ public class PlayerController : Controller<PlayerController>
     //Scripts
     public Movement2D Movement { get; private set; }
     public new State<PlayerController> State { get; private set; }
+    
 
     protected override void InitializeStates()
     {
@@ -34,6 +37,9 @@ public class PlayerController : Controller<PlayerController>
 
     private void Awake()
     {
+        //Attributes.Speed = 10;
+
+
         PCI = new PlayerControlsInput();
         PCI.Enable();
     }
@@ -60,5 +66,11 @@ public class PlayerController : Controller<PlayerController>
     private void OnDestroy()
     {
         PCI.Disable();
+    }
+
+    public void InterpreteAffects(Effects effects)
+    {
+        Health -= effects.Damage;
+        Debug.Log(effects.CallBack(1));
     }
 }
