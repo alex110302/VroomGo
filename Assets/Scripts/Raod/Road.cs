@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Road : MonoBehaviour 
 {
+    //! Properties
+
     //GameObjects
     [field: SerializeField] public GameObject RoadObj { get; private set; }
     [field: SerializeField] public GameObject NewRoadSegSpawnPoint { get; private set; }
@@ -13,12 +15,16 @@ public class Road : MonoBehaviour
 
     //Scripts
     public Pathfinding Pathfinding { get; private set; }
+    [field: SerializeField] public RoadSpawner Spawner { get; set; }
 
+    //Primatives
+
+    //! Feilds
     [SerializeField] private bool isStarterRoad = false;
 
     private void Awake()
     {
-        Vector2 gridPostion = new Vector2(transform.position.x, transform.position.y + 10); 
+        Vector2 gridPostion = new Vector2(transform.position.x, transform.position.y + 10);
 
         if (!isStarterRoad) Pathfinding = new Pathfinding(8, 1, 2.5f, gridPostion, RoadObj, true, 0, true);
     }
@@ -34,7 +40,7 @@ public class Road : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        transform.position += (Vector3.up * Time.fixedDeltaTime) * -10; 
+        transform.position += (Vector3.up * Time.fixedDeltaTime) * -Spawner.RoadSpeed; 
     }
 
     private void DespawnRoad()
@@ -78,7 +84,7 @@ public class Road : MonoBehaviour
             }
 
             Car = Instantiate(carPrefab, transform).GetComponent<CarController>();
-
+            Car.Road = this;
             Car.transform.position = Pathfinding.Grid.GetCenterOfCellPosition(gridPostion, 0);
         }
     }

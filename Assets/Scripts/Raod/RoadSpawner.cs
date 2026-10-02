@@ -7,10 +7,12 @@ public class RoadSpawner : MonoBehaviour
     [field: SerializeField] public GameObject RoadPrefab { get; private set; }
     public Road Road { get; private set; }
 
+    [field: SerializeField] public int RoadSpeed { get; set; }
+
     private void Start()
     {
         Road = Instantiate(RoadPrefab, transform.position, Quaternion.identity).GetComponent<Road>();
-        
+        Road.Spawner = this;
     }
     private void Update()
     {
@@ -19,9 +21,12 @@ public class RoadSpawner : MonoBehaviour
 
     private void SpawnNewRoad()
     {
-        if (Road.transform.position.y < -10) 
+        if (Road.transform.position.y < -10)
+        {
             Road = Instantiate(RoadPrefab, 
             Road.NewRoadSegSpawnPoint.transform.position, 
             Quaternion.identity).GetComponent<Road>();
+            Road.Spawner = this;
+        }
     }
 }

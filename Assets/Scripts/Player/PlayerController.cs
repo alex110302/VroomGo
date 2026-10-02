@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : Controller<PlayerController>, IAffectable
+public class PlayerController : Controller<PlayerController>
 {
     //Player Object
     [field: SerializeField] public GameObject playerObj { get; private set; }
@@ -66,11 +66,5 @@ public class PlayerController : Controller<PlayerController>, IAffectable
     private void OnDestroy()
     {
         PCI.Disable();
-    }
-
-    public void InterpreteAffects(Effects effects)
-    {
-        Health -= effects.Damage;
-        Debug.Log(effects.CallBack(1));
     }
 }

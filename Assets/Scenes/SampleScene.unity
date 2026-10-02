@@ -590,7 +590,7 @@ GameObject:
   - component: {fileID: 1437082635}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,8 +761,8 @@ MonoBehaviour:
   <BoundMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 0
-  <Speed>k__BackingField: 10
   <Health>k__BackingField: 0
+  <Speed>k__BackingField: 10
 --- !u!114 &1437082635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,6 +838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadSpawner
   <RoadPrefab>k__BackingField: {fileID: 7979386961748057473, guid: f1110dd5453696b40aea76923ea7288b, type: 3}
+  <RoadSpeed>k__BackingField: 10
 --- !u!1 &1755747752
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,6 +969,10 @@ PrefabInstance:
       propertyPath: isStarterRoad
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3206278785736647114, guid: f1110dd5453696b40aea76923ea7288b, type: 3}
+      propertyPath: <Spawner>k__BackingField
+      value: 
+      objectReference: {fileID: 1630226324}
     - target: {fileID: 7979386961748057473, guid: f1110dd5453696b40aea76923ea7288b, type: 3}
       propertyPath: m_Name
       value: Raod

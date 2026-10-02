@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IObstacles
+public interface IObstacles<T> where T : Controller<T>
 {
-    public void CauseAffect(IAffectable affects);
+    public void CauseAffect(T controller);
 }
